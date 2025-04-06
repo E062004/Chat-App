@@ -10,7 +10,7 @@ import {UserContextProvider} from "./UserContext";
 
 
 function App() {
-  axios.defaults.baseURL='http://localhost:4040';
+  axios.defaults.baseURL='https://chat-app-backend-b7tm.onrender.com';
   axios.defaults.withCredentials=true;
   
   return (
