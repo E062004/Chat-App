@@ -98,7 +98,7 @@ app.post('/login', async (req,res) => {
           secure: true,
           sameSite: 'none',
           //domain: '.onrender.com',
-          domain: 'chat-app-backend-b7tm.onrender.com',
+         // domain: 'chat-app-backend-b7tm.onrender.com',
           path: '/',
           maxAge: 30 * 24 * 60 * 60 * 1000
         }).json({
@@ -134,7 +134,7 @@ app.post('/register', async (req,res) => {
         secure: true,
         sameSite: 'none',
        // domain: '.onrender.com',
-        domain: 'chat-app-backend-b7tm.onrender.com',
+       // domain: 'chat-app-backend-b7tm.onrender.com',
         path: '/',
         maxAge: 30 * 24 * 60 * 60 * 1000
       }).status(201).json({
