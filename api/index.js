@@ -75,6 +75,7 @@ app.get('/people', async (req,res) => {
 });
 
 app.get('/profile', (req, res) => {
+  console.log('Received cookies:', req.headers.cookie);
   const token = req.cookies?.token;
   if (token) {
     jwt.verify(token, jwtSecret, {}, (err, userData) => {
