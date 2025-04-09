@@ -12,6 +12,7 @@ import {UserContextProvider} from "./UserContext";
 function App() {
   axios.defaults.baseURL='https://chat-app-backend-b7tm.onrender.com';
   axios.defaults.withCredentials=true;
+  axios.defaults.headers.common['Content-Type'] = 'application/json';
   
   return (
     <UserContextProvider>
