@@ -24,7 +24,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
   credentials: true,
-  origin: process.env.CLIENT_URL,
+  origin: [
+    process.env.CLIENT_URL,
+    'https://eeshareddy.netlify.app'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 async function getUserDataFromRequest(req) {
@@ -81,7 +86,12 @@ app.post('/login', async (req,res) => {
     const passOk = bcrypt.compareSync(password, foundUser.password);
     if (passOk) {
       jwt.sign({userId:foundUser._id,username}, jwtSecret, {}, (err, token) => {
-        res.cookie('token', token, {sameSite:'none', secure:true}).json({
+        res.cookie('token', token, {httpOnly: true,
+  secure: true,
+  sameSite: 'none',
+  domain: '.onrender.com', // Or your production domain
+  path: '/',
+  maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days}).json({
           id: foundUser._id,
         });
       });
@@ -103,7 +113,12 @@ app.post('/register', async (req,res) => {
     });
     jwt.sign({userId:createdUser._id,username}, jwtSecret, {}, (err, token) => {
       if (err) throw err;
-      res.cookie('token', token, {sameSite:'none', secure:true}).status(201).json({
+      res.cookie('token', token, {httpOnly: true,
+  secure: true,
+  sameSite: 'none',
+  domain: '.onrender.com', // Or your production domain
+  path: '/',
+  maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days}).status(201).json({
         id: createdUser._id,
       });
     });
