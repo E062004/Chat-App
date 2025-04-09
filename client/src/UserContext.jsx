@@ -15,18 +15,24 @@ export function UserContextProvider({ children }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    axios.get('/profile', { withCredentials: true })
-      .then(response => {
-        setId(response.data.userId);
-        setUsername(response.data.username);
-      })
-      .catch(error => {
-        // Clear invalid auth state
-        document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        setId(null);
-        setUsername(null);
-      })
-      .finally(() => setReady(true));
+    axios.get('/profile', { 
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      setId(response.data.userId);
+      setUsername(response.data.username);
+    })
+    .catch(error => {
+      console.log('Auth check failed:', error.response?.status === 401 
+        ? 'Not authenticated' 
+        : 'Connection error');
+      setId(null);
+      setUsername(null);
+    })
+    .finally(() => setReady(true));
   }, []);
 
   return (
