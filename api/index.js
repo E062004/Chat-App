@@ -100,7 +100,7 @@ app.post('/login', async (req,res) => {
           httpOnly: true,
           secure: true,
           sameSite: 'none',
-          domain: '.onrender.com',
+          //domain: '.onrender.com',
           path: '/',
           maxAge: 30 * 24 * 60 * 60 * 1000
         }).json({
@@ -135,7 +135,7 @@ app.post('/register', async (req,res) => {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
-        domain: '.onrender.com',
+       // domain: '.onrender.com',
         path: '/',
         maxAge: 30 * 24 * 60 * 60 * 1000
       }).status(201).json({
