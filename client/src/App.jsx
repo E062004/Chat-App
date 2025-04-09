@@ -13,9 +13,7 @@ function App() {
   axios.defaults.baseURL='https://chat-app-backend-b7tm.onrender.com';
   axios.defaults.withCredentials=true;
   axios.defaults.headers.common['Content-Type'] = 'application/json';
-  fetch(url, {
-  credentials: 'include' // Equivalent to withCredentials
-}) 
+  
   
   return (
     <UserContextProvider>
