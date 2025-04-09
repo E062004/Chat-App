@@ -31,6 +31,13 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Origin', req.headers.origin || 'https://eeshareddy.netlify.app');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  next();
+});
 
 async function getUserDataFromRequest(req) {
   return new Promise((resolve, reject) => {
@@ -67,15 +74,18 @@ app.get('/people', async (req,res) => {
   res.json(users);
 });
 
-app.get('/profile', (req,res) => {
+app.get('/profile', (req, res) => {
   const token = req.cookies?.token;
   if (token) {
     jwt.verify(token, jwtSecret, {}, (err, userData) => {
-      if (err) throw err;
+      if (err) {
+        console.error('JWT verification error:', err);
+        return res.clearCookie('token').status(401).json('Invalid token');
+      }
       res.json(userData);
     });
   } else {
-    res.status(401).json('no token');
+    res.status(401).json('No token provided');
   }
 });
 
