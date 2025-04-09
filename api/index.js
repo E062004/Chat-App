@@ -23,15 +23,17 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
+  origin: 'https://eeshareddy.netlify.app',
   credentials: true,
-  origin: 'https://eeshareddy.netlify.app', // Exact correct spelling
-  methods: ['GET', 'POST', 'PUT', 'DELETE'] // Proper method list
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Additional headers middleware
 app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://eeshareddy.netlify.app');
   res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Origin', req.headers.origin || 'https://eeshareddy.netlify.app');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
