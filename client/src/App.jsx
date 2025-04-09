@@ -1,9 +1,16 @@
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
 import axios from "axios";
-import { UserContextProvider } from "./UserContext";
 import Routes from "./Routes";
 
-// Critical configuration
-axios.defaults.baseURL = 'https://chat-app-backend-b7tm.onrender.com';
+
+import {UserContextProvider} from "./UserContext";
+
+
+
+function App() {
+  axios.defaults.baseURL = 'https://chat-app-backend-b7tm.onrender.com';
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
@@ -13,12 +20,15 @@ axios.interceptors.request.use(config => {
   return config;
 });
 
-function App() {
   return (
     <UserContextProvider>
       <Routes />
     </UserContextProvider>
+    
   );
 }
 
 export default App;
+
+//
+
